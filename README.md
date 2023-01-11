@@ -1,1 +1,1 @@
-# ideahold.github.io
+# magaz
