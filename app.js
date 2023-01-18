@@ -30,7 +30,9 @@ btn2.addEventListener("click", function(){
 		tg.MainButton.hide();
 	}
 	else {
+		tg.MainButton.setText("Вы выбрали товар 2!");
 		item = "2";
+		tg.MainButton.show();
 	}
 });
 
@@ -39,7 +41,9 @@ btn3.addEventListener("click", function(){
 		tg.MainButton.hide();
 	}
 	else {
+		tg.MainButton.setText("Вы выбрали товар 3!");
 		item = "3";
+		tg.MainButton.show();
 	}
 });
 
@@ -48,7 +52,9 @@ btn4.addEventListener("click", function(){
 		tg.MainButton.hide();
 	}
 	else {
+		tg.MainButton.setText("Вы выбрали товар 4!");
 		item = "4";
+		tg.MainButton.show();
 	}
 });
 
@@ -57,7 +63,9 @@ btn5.addEventListener("click", function(){
 		tg.MainButton.hide();
 	}
 	else {
+		tg.MainButton.setText("Вы выбрали товар 5!");
 		item = "5";
+		tg.MainButton.show();
 	}
 });
 
@@ -66,17 +74,14 @@ btn6.addEventListener("click", function(){
 		tg.MainButton.hide();
 	}
 	else {
+		tg.MainButton.setText("Вы выбрали товар 6!");
 		item = "6";
+		tg.MainButton.show();
 	}
 });
 
-if (item !== null) {
-	tg.MainButton.setText(`!Вы выбрали товар ${item}!`);
-	tg.MainButton.show();
-}
 
-tg.MainButton.onclick(function() {
-	tg.MainButton.setText("Отправляю запрос");
+Telegram.WebApp.onEvent("mainButtonClicked", function(){
 	tg.sendData(item);
 });
 
