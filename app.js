@@ -76,6 +76,7 @@ if (item !== null) {
 }
 
 tg.MainButton.onclick(function() {
+	tg.MainButton.setText("Отправляю запрос");
 	tg.sendData(item);
 });
 
