@@ -23,5 +23,3 @@ Removing a value in a new commit does not remove previous commits. If a secret
 was exposed, revoke or rotate it at its provider and update affected deployments.
 Coordinate any history rewrite with repository collaborators before publishing it.
 Do not put secret values into issues, pull requests, or commit messages.
-
-This is a sanitized snapshot of a legacy project for source review. It does not include operational data or credentials. A clean credential scan is not a full application security audit. Review dependencies and deployment settings before running a public service.
