@@ -11,3 +11,10 @@ def required_setting(name):
 
 BOT_TOKEN = required_setting("BOT_TOKEN")
 PAYMENTS_TOKEN = required_setting("PAYMENTS_TOKEN")
+
+from urllib.parse import urlparse
+
+WEBAPP_URL = os.environ.get("WEBAPP_URL", "https://sultanbro.github.io/").strip()
+if urlparse(WEBAPP_URL).scheme != "https" or not urlparse(WEBAPP_URL).netloc:
+    raise RuntimeError("WEBAPP_URL must be an HTTPS URL")
+ORDERS_DB = os.environ.get("ORDERS_DB", "data/orders.sqlite3")
