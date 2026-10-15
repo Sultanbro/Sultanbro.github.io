@@ -1,101 +1,38 @@
-let tg = window.Telegram.WebApp;
+(() => {
+  const tg = window.Telegram?.WebApp;
+  const inTelegram = Boolean(tg?.initData);
+  const status = document.getElementById('selection');
+  const usercard = document.getElementById('usercard');
+  const buttons = [...document.querySelectorAll('[data-item]')];
+  let selected = '';
 
-tg.expand();
+  if (inTelegram) {
+    tg.ready();
+    tg.expand();
+    tg.MainButton.color = '#276449';
+    tg.MainButton.textColor = '#ffffff';
+    const user = tg.initDataUnsafe?.user;
+    usercard.textContent = user ? `Здравствуйте, ${user.first_name || ''}!` : 'Каталог открыт в Telegram';
+  } else {
+    usercard.textContent = 'Предпросмотр каталога. Для оформления откройте его кнопкой бота в Telegram.';
+  }
 
-tg.MainButton.textColor = "#FFFFFF";
-tg.MainButton.color = "#2cab37";
-
-let item = "";
-
-let btn1 = document.getElementById("btn1");
-let btn2 = document.getElementById("btn2");
-let btn3 = document.getElementById("btn3");
-let btn4 = document.getElementById("btn4");
-let btn5 = document.getElementById("btn5");
-let btn6 = document.getElementById("btn6");
-
-btn1.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 1!");
-		item = "1";
-		tg.MainButton.show();
-	}
-});
-
-btn2.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 2!");
-		item = "2";
-		tg.MainButton.show();
-	}
-});
-
-btn3.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 3!");
-		item = "3";
-		tg.MainButton.show();
-	}
-});
-
-btn4.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 4!");
-		item = "4";
-		tg.MainButton.show();
-	}
-});
-
-btn5.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 5!");
-		item = "5";
-		tg.MainButton.show();
-	}
-});
-
-btn6.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 6!");
-		item = "6";
-		tg.MainButton.show();
-	}
-});
-
-
-Telegram.WebApp.onEvent("mainButtonClicked", function(){
-	tg.sendData(item);
-});
-
-let usercard = document.getElementById("usercard");
-
-let p = document.createElement("p");
-
-p.innerText = `${tg.initDataUnsafe.user.first_name}
-${tg.initDataUnsafe.user.last_name}`;
-
-
-usercard.appendChild(p); 
-
-
-
-
-
+  buttons.forEach(button => button.addEventListener('click', () => {
+    selected = selected === button.dataset.item ? '' : button.dataset.item;
+    buttons.forEach(item => {
+      const active = item.dataset.item === selected;
+      item.setAttribute('aria-pressed', String(active));
+      item.textContent = active ? 'Выбрано' : 'Выбрать';
+    });
+    status.textContent = selected ? `Выбран демо-набор ${selected}` : 'Выберите один набор из каталога';
+    if (inTelegram) {
+      if (selected) {
+        tg.MainButton.setText(`Оформить набор ${selected}`);
+        tg.MainButton.show();
+      } else tg.MainButton.hide();
+    }
+  }));
+  if (inTelegram) tg.onEvent('mainButtonClicked', () => {
+    if (selected) tg.sendData(selected);
+  });
+})();

@@ -1,16 +1,6 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, InlineKeyboardButton, InlineKeyboardMarkup
-from aiogram.utils.callback_data import CallbackData
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
 
-web_app = WebAppInfo(url="https://sultanbro.github.io/")
 
-keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [KeyboardButton(text="Site", web_app=web_app)]
-    ],
-    resize_keyboard=True
-)
-
-cb = CallbackData('btn', 'action')
-key = InlineKeyboardMarkup(
-    inline_keyboard=[[InlineKeyboardButton('Pay', callback_data='btn:buy')]]
-)
+def make_keyboard(url):
+    return ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Открыть каталог', web_app=WebAppInfo(url=url))]],
+                               resize_keyboard=True)
